@@ -1,27 +1,25 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-
-function Post() {
-    const [post, setPost] = useState({});
-    const { id } = useParams();
-
+import { Link } from 'react-router-dom';
+function Posts() {
+    const [posts, setPosts] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:8080/api/posts/${id}`)
+        fetch('http://localhost:8080/api/posts')
             .then(res => res.json())
-            .then(data => setPost(data.data))
-    })
-
+            .then(data => setPosts(data.data))
+    }, [])
     return (
         <>
-            <h1>{post.title}</h1>
-            <p>{post.description}</p>
-            <img src={post.image} />
-            <div>
-                <Link to={`/posts/${id}/edit`}>Edit Post</Link>
-                <Link to="/posts">Back to Posts</Link>
-            </div>
+            <h1>All Posts</h1>
+            {posts.length === 0 && <p>Loading...</p>}
+            <ul>
+                {posts.map(post => (
+                    <li key={post.id}>
+                        <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                    </li>
+                ))}
+            </ul>
+            <Link to="/posts/new">Create Post</Link>
         </>
     )
 }
-
-export default Post;
+export default Posts;
