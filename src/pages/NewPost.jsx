@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function NewPost() {
     const [title, setTitle] = useState('');
@@ -29,7 +29,7 @@ function NewPost() {
             console.log(err)
         })
     }
-
+    
     return (
         <>
             <h1>New Post</h1>
@@ -45,8 +45,8 @@ function NewPost() {
                 <br />
                 <button type="submit" onClick={handleSubmit}>Submit</button>
             </form>
+            <Link to="/posts">Back to Posts</Link>
         </>
     )
 }
-
 export default NewPost;
